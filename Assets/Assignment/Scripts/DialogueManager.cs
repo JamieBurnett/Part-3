@@ -6,6 +6,7 @@ using TMPro;
 public class DialogueManager : MonoBehaviour
 {
     public static bool playerInDialogue;
+    public static DialogueManager diaManager;
     public GameObject dialogueBox;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
@@ -16,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        diaManager = FindObjectOfType<DialogueManager>();
         nameText.text = "";
         dialogueText.text = "";
         sentences = new Queue<string>();
@@ -26,7 +28,14 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetButtonDown("Cancel"))
+        {
+            EndDialogue();
+        }
+        if (Input.GetButtonDown("Next"))
+        {
+            DisplayNextSentence();
+        }
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -56,6 +65,33 @@ public class DialogueManager : MonoBehaviour
        
     }
 
+    public void StartDialogueUnknown(DialogueNameUnknown dialogue)
+    {
+        if (!playerInDialogue)
+        {
+            dialogueBox.SetActive(true);
+
+            playerInDialogue = true;
+
+            nameCounter = 0;
+            Debug.Log("Starting conversation with... " + dialogue.name[nameCounter]);
+
+            names = dialogue.name;
+
+            sentences.Clear();
+
+            foreach (string sentence in dialogue.sentences)
+            {
+
+                sentences.Enqueue(sentence);
+
+            }
+            DisplayNextSentence();
+        }
+
+
+    }
+
     public void DisplayNextSentence()
     {
         if (sentences.Count == 0)
@@ -81,15 +117,20 @@ public class DialogueManager : MonoBehaviour
         }
     }
     
-    public void EndDialogue()
+    public void DialogueEnd()
     {
-        playerInDialogue = false;
-        Debug.Log("end of conversation");
 
         StopAllCoroutines();
         dialogueText.text = "";
         nameText.text = "";
         dialogueBox.SetActive(false);
+    }
+
+    public static void EndDialogue()
+    {
+        DialogueManager.playerInDialogue = false;
+        Debug.Log("end of conversation");
+        diaManager.DialogueEnd();
     }
 
 }
