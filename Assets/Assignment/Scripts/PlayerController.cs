@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
-    public static bool playerInDialogue = false;
     private Vector2 moveInput;
     private Vector2 change;
     private Rigidbody2D rb;
@@ -18,7 +17,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!playerInDialogue)
+        if (!DialogueManager.playerInDialogue)
         {
 
             moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));

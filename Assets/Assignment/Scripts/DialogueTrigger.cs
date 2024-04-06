@@ -21,4 +21,13 @@ public class DialogueTrigger : MonoBehaviour
     {
         FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        
+        if (collision.tag == "Player" && Input.GetButton("Talk")&& !DialogueManager.playerInDialogue)
+        {
+            sendDialogue();
+        }
+    }
 }
