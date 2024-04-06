@@ -11,8 +11,11 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
     private Queue<string> sentences;
-    private int nameCounter;
+    private int counter;
     private string[] names;
+    public Color32[] colours;
+    private Color32[] colourStorage;
+    private int colourCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +25,14 @@ public class DialogueManager : MonoBehaviour
         dialogueText.text = "";
         sentences = new Queue<string>();
         dialogueBox.SetActive(false);
-
+        counter = 0;
+        colourCounter =0;
+        colourStorage = new Color32[colours.Length];
+        foreach (Color i in colours)
+        {
+            colourStorage[counter] = i;
+            counter += 1;
+        }
     }
 
     // Update is called once per frame
@@ -46,8 +56,8 @@ public class DialogueManager : MonoBehaviour
 
             playerInDialogue = true;
 
-            nameCounter = 0;
-            Debug.Log("Starting conversation with... " + dialogue.name[nameCounter]);
+            counter = 0;
+            Debug.Log("Starting conversation with... " + dialogue.name[counter]);
 
             names = dialogue.name;
 
@@ -73,8 +83,8 @@ public class DialogueManager : MonoBehaviour
 
             playerInDialogue = true;
 
-            nameCounter = 0;
-            Debug.Log("Starting conversation with... " + dialogue.name[nameCounter]);
+            counter = 0;
+            Debug.Log("Starting conversation with... " + dialogue.name[counter]);
 
             names = dialogue.name;
 
@@ -94,6 +104,9 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayNextSentence()
     {
+        nameText.color = colours[colourCounter];
+        dialogueText.color = colours[colourCounter];
+        colourCounter += 1;
         if (sentences.Count == 0)
         {
             EndDialogue();
@@ -102,8 +115,8 @@ public class DialogueManager : MonoBehaviour
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
-        nameText.text = names[nameCounter];
-        nameCounter += 1;
+        nameText.text = names[counter];
+        counter += 1;
         Debug.Log(sentence);
     }
 
@@ -119,7 +132,13 @@ public class DialogueManager : MonoBehaviour
     
     public void DialogueEnd()
     {
-
+        colourCounter = 0;
+        counter = 0;
+        foreach (Color32 i in colourStorage)
+        {
+            colours[counter] = i;
+            counter += 1;
+        }
         StopAllCoroutines();
         dialogueText.text = "";
         nameText.text = "";
