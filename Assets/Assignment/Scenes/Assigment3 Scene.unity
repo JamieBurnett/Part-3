@@ -371,6 +371,8 @@ MonoBehaviour:
     sentences:
     - 'This is a test '
     - it seems to be working
+  loop: 0
+  postTalkingDialogue: []
 --- !u!4 &682278015
 Transform:
   m_ObjectHideFlags: 0
@@ -515,6 +517,24 @@ MonoBehaviour:
     - Who are you?
     - I'm Sir Dia'Loge, of course!
     - Pleasure to have met you! Goodbye!
+  loop: 0
+  postTalkingDialogue:
+  - name:
+    - Sir Dia'Loge
+    sentences:
+    - I have nothing more to say to you
+  - name:
+    - Sir Dia'Loge
+    sentences:
+    - I really dont. I Promise
+  - name:
+    - Sir Dia'Loge
+    sentences:
+    - My you're insistent, aren't you?
+  - name:
+    - Sir Dia'Loge
+    sentences:
+    - Don't you have something better to do?
 --- !u!4 &683305073
 Transform:
   m_ObjectHideFlags: 0

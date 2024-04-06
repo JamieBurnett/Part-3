@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (DialogueManager.playerInDialogue)
+        {
+            change = Vector2.zero;
+        }
         rb.MovePosition(rb.position + change * Time.deltaTime);
 
     }
